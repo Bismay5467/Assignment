@@ -17,6 +17,7 @@ import {
 import { SearchContext } from "./context/search";
 import { getCoordinates, getWeatherInfo } from "./utils/searchResult";
 import { getClosetRecord } from "./utils/getter";
+import { toast, Toaster } from "sonner";
 
 export default function App() {
   const [tempUnit, setTempUnit] = useState<TTempUnit>(INITIAL_TEMP_UNIT);
@@ -30,13 +31,17 @@ export default function App() {
   const [bg, setBg] = useState<string>("bg-foggy-day");
   useEffect(() => {
     if (searchVal.trim().length === 0) return;
-    getCoordinates({ name: searchVal.trim() }).then((coordinates) => {
-      if (Object.keys(coordinates).length === 0) return;
-      setLocation({ latitude: coordinates.lat, longitude: coordinates.lon });
-    });
+    getCoordinates({ name: searchVal.trim() })
+      .then((coordinates) => {
+        if (Object.keys(coordinates).length === 0) return;
+        setLocation({ latitude: coordinates.lat, longitude: coordinates.lon });
+      })
+      .catch(() => toast.error("Seems like this place doesn't exists!"));
   }, [searchVal]);
   useEffect(() => {
-    getWeatherInfo({ location }).then((val) => setWeatherInfo(val));
+    getWeatherInfo({ location })
+      .then((val) => setWeatherInfo(val))
+      .catch(() => toast.error("An unknown error occurred"));
   }, [JSON.stringify(location)]);
   useEffect(() => {
     if (weatherInfo === null) return;
@@ -78,6 +83,7 @@ export default function App() {
           time,
         }}
       >
+        <Toaster position="bottom-right" richColors />
         <div className="h-screen w-screen overflow-hidden font-notosans text-primary">
           <div className={`${bg} bg-cover bg-fit w-full h-full`}>
             <div className="flex">

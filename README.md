@@ -1,50 +1,74 @@
-# React + TypeScript + Vite
+### ⚒️Tooling
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+📌 VS Code as the preferred code editor.
 
-Currently, two official plugins are available:
+📌 NPM to manage pacakges and dependencies
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+📌 Prettier for code formatting.
 
-## Expanding the ESLint configuration
+📌 JSON Server server running on localhost at PORT 3000
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## 💻 Setup the Project
 
-- Configure the top-level `parserOptions` property like this:
+The following steps will get you up and running to contribute to Taghash:
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+1. Fork the repo (click the <kbd>Fork</kbd> button at the top right of
+   [this page](https://github.com/Bismay5467/Assignment.git))
+
+2. Clone your fork locally
+
+```sh
+git clone https://github.com/<your github username>/Assignment.git
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+3. Setup all the dependencies and packages by running: 
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+```sh
+npm run dev
+npm run server
 ```
+Note : Run these cmds in two different terminal instance (Git Bash is preferred).
+
+Note : Don't forget to change the env variables meant for mysql database. 
+
+For testing this api key can be used :
+
+```
+VITE_OPEN_WEATHER_APP_API_KEY=c5c3f539d98056d41b62fefe066a8e30
+```
+
+Now you are good to go!! Client would be running on PORT 5173 and Server would be running on PORT 3000! 🚀✨
+
+## 🤖 Commands
+
+🌐 **`npm run dev`**: starts the development server.
+
+🌐 **`npm run server`**: starts the mock json server.
+
+## 🧑‍💻 Demo
+
+
+
+
+
+## 💬 Comments
+
+1. Minute details have been taken into consideration while working on this assignment.
+   
+2. The icons would change depending on if it is day or night (sun/moon) for better UX. The bg-image will change depending on the weather.
+   
+3. Recent searches will be stored in localstorage which forms in the autocomplete list. Most 10 recent searches are stored at every instance.
+   
+4. The 5 day forecast list is a vetically scrollable list forecasting what the weather would be for the next 5 days at THIS CURRENT MOMENT.
+   
+5. The heart icon on the top left corner is used to add a serached location to the list of favourite cities. 
+   
+6. Toggling this icon will first add the location to the list and would then remove from the list if clicked again.
+   
+7. Clicking on any of the 4 hours step forecast will display what the weather would be at that hour. 
+   
+8. We can see what the weather is like at the current moment of our favourite cities by ckicking on any of the favourite cities card.
+   
+9.  We can remove a favourite city from the list by clicking on the cross at the top right corner of the card.
+
+10. Highly maintainable code following industry standard.

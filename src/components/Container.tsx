@@ -15,6 +15,7 @@ import { useEffect, useState } from "react";
 import { getClosetRecord, getHourlyForecastData } from "../utils/getter";
 import { IFavorite, IWeatherInfo } from "../types/types";
 import { add, deleteFavorite, getFavorite } from "../utils/server";
+import { toast, Toaster } from "sonner";
 
 export default function Container() {
   const { weatherInfo, index, setIndex, location, time } = useSearchContext();
@@ -43,19 +44,31 @@ export default function Container() {
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(" ");
   useEffect(() => {
-    getFavorite().then((val) => {
-      setFavorite(val);
-      const key = `${location.latitude}_${location.longitude}`;
-      const doesExist =
-        val.find((info) => info.id === key) === undefined ? false : true;
-      setDoesExist(doesExist);
-    });
+    getFavorite()
+      .then((val) => {
+        setFavorite(val);
+        const key = `${location.latitude}_${location.longitude}`;
+        const doesExist =
+          val.find((info) => info.id === key) === undefined ? false : true;
+        setDoesExist(doesExist);
+      })
+      .catch(() =>
+        toast.error(
+          '"Something weird happen. We are working on it. Please try after sometime",'
+        )
+      );
   }, [JSON.stringify(favourite)]);
   const handleDelete = (id: string) => {
-    deleteFavorite(id).then(() => {
-      const newFav = favourite.filter((info) => info.id !== id);
-      setFavorite(newFav);
-    });
+    deleteFavorite(id)
+      .then(() => {
+        const newFav = favourite.filter((info) => info.id !== id);
+        setFavorite(newFav);
+      })
+      .catch(() =>
+        toast.error(
+          "Something weird happen. We are working on it. Please try after sometime"
+        )
+      );
   };
   const addToFavourite = () => {
     const key = `${location.latitude}_${location.longitude}`;
@@ -69,12 +82,15 @@ export default function Container() {
       name: weatherInfo.name,
       id: key,
     };
-    add(info, favourite).then(() => {
-      setFavorite((prevState) => [...prevState, info]);
-    });
+    add(info, favourite)
+      .then(() => {
+        setFavorite((prevState) => [...prevState, info]);
+      })
+      .catch((err) => toast.error(err.message));
   };
   return (
     <div className="w-3/4 p-10 h-screen">
+      <Toaster position="bottom-right" richColors />
       <div className="flex justify-between w-full h-56">
         <div className="flex flex-col justify-between">
           <div className="w-full h-10 font-semibold flex gap-x-2 justify-start">

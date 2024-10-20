@@ -31,20 +31,16 @@ export const getCoordinates = async ({ name }: { name: string }) => {
   const apiEndPoint = `http://api.openweathermap.org/geo/1.0/direct?q=${name}&limit=5&appid=${
     import.meta.env.VITE_OPEN_WEATHER_APP_API_KEY
   }`;
-  try {
-    const res = await axios(apiEndPoint);
-    const [data] = res.data;
-    if (data === undefined)
-      throw new Error("Seems like this place doesn't exists!");
-    Object.assign(coordinates, {
-      lat: data.lat,
-      lon: data.lon,
-      country: data.country ?? "",
-      name: data.name ?? name,
-    });
-  } catch (error) {
-    console.log("An unknown error occured" + error);
-  }
+  const res = await axios(apiEndPoint);
+  const [data] = res.data;
+  if (data === undefined)
+    throw new Error("Seems like this place doesn't exists!");
+  Object.assign(coordinates, {
+    lat: data.lat,
+    lon: data.lon,
+    country: data.country ?? "",
+    name: data.name ?? name,
+  });
   return coordinates;
 };
 
@@ -83,19 +79,15 @@ export const getWeatherInfo = async ({ location }: { location: ILocation }) => {
   const apiEndPoint = `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${
     import.meta.env.VITE_OPEN_WEATHER_APP_API_KEY
   }`;
-  try {
-    const { data } = await axios(apiEndPoint);
-    const { list } = data;
-    const today = new Date().toISOString().slice(0, 10);
-    Object.assign(info, {
-      name: data?.city?.name,
-      country: data?.city?.country,
-      forecast: Array.from({ length: 6 }).map((_, idx) =>
-        getProcessedForecast({ data: list, date: getDate(idx, today) })
-      ),
-    });
-  } catch (error) {
-    console.log("An unknown error occured" + error);
-  }
+  const { data } = await axios(apiEndPoint);
+  const { list } = data;
+  const today = new Date().toISOString().slice(0, 10);
+  Object.assign(info, {
+    name: data?.city?.name,
+    country: data?.city?.country,
+    forecast: Array.from({ length: 6 }).map((_, idx) =>
+      getProcessedForecast({ data: list, date: getDate(idx, today) })
+    ),
+  });
   return info as IWeatherInfoExtended;
 };
