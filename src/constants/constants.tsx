@@ -28,7 +28,7 @@ export const getIcon = ({
       return {
         icon: <IoThunderstormOutline className={style} />,
         type: "Thunderstorm",
-        bg: "bg-rainy-day",
+        bg: "bg-thunder-day",
       };
     case 3:
       return {
@@ -40,7 +40,7 @@ export const getIcon = ({
       return {
         icon: <IoRainyOutline className={style} />,
         type: "Rain",
-        bg: "bg-rainy-day",
+        bg: "bg-thunder-day",
       };
     case 6:
       return {

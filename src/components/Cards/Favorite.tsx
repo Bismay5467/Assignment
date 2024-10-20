@@ -49,7 +49,7 @@ export default function Favorite({
     >
       <div className="flex justify-end">
         <VscChromeClose
-          className="text-slate-500 cursor-pointer"
+          className="text-black cursor-pointer"
           onClick={() => handleDelete(id)}
         />
       </div>
